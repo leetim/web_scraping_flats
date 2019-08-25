@@ -4,12 +4,6 @@ import requests
 # Для работы с табличными данными
 import pandas as pd
 
-# Для работы с регулярными выражениями
-import re
-
-# Для работы с массивами и вычислениями
-import numpy as np
-
 # Для работы с SQL
 from sqlalchemy import create_engine
 import sqlalchemy
