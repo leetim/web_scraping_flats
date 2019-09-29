@@ -183,4 +183,4 @@ class geocoder:
                     driver.close()
                     continue
         else:
-            pd.DataFrame({'address' : address, 'latitude' : [latitude], 'longitude' : [longitude]})
+            return pd.DataFrame({'address' : address, 'latitude' : [latitude], 'longitude' : [longitude]})
