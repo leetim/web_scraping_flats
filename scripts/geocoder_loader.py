@@ -19,7 +19,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait as wait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException, NoSuchElementException, WebDriverException, InvalidSessionIdException
+from selenium.common.exceptions import WebDriverException
 
 # Для работы с табличными данными
 import pandas as pd
@@ -106,7 +106,7 @@ class geocoder:
                 return [latitude, longitude]
                 driver.close()
                 break
-            except (TimeoutException, WebDriverException, InvalidSessionIdException, NoSuchElementException) as error:
+            except WebDriverException as error:
                 driver.close()
                 continue
 
@@ -156,7 +156,7 @@ class geocoder:
                     # Вставляем user agent
                     chrome_options.add_argument("user-agent={user_agent}".format(user_agent = headers))
                     #  Запускаем без графического драйвера
-                    chrome_options.add_argument('--headless')
+                    chrome_options.add_argument('headless')
                     driver = webdriver.Chrome(options = chrome_options)
                     # Установим time out
                     driver.implicitly_wait(10)
@@ -164,6 +164,7 @@ class geocoder:
                     wait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, '.card-title-view')))
                     driver.find_element(By.CSS_SELECTOR, '.card-title-view')
                     page_source = driver.page_source
+                    driver.close()
                     bsObj = BeautifulSoup(page_source, 'html5lib')
                     coordinats_list = bsObj.find_all('div', {'class' : 'clipboard__action-wrapper _inline'})
                     # Ищем координтаы
@@ -176,10 +177,9 @@ class geocoder:
                     else:
                         latitude = latitude
                         longitude = longitude
-                    driver.close()
                     return pd.DataFrame({'address' : address, 'latitude' : [latitude], 'longitude' : [longitude]})
                     break
-                except (TimeoutException, WebDriverException, InvalidSessionIdException, NoSuchElementException) as error:
+                except WebDriverException as error:
                     driver.close()
                     continue
         else:
