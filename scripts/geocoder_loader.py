@@ -68,7 +68,8 @@ class geocoder:
         """
         Функция для инциализации объекта класса.
         Параметры:
-        city_address - текстовое наименование города поиска
+        city_address - текстовое наименование города поиска,
+        proxy_cycle - зацикленные прокси-адреса.
         """
         self.city_address = city_address
         self.proxy_cycle = proxy_cycle
@@ -143,6 +144,8 @@ class geocoder:
         Вход: текст адреса, широта города, долгота города.
         Выход: таблица: адрес, широта и долгота.
         """
+        # Для рааботы с API OSM убираем призак дома (д.)
+        address_prepared = address.replace(' д. ', ' ')
         latitude, longitude = self.osm_coordinates(address)
         if latitude is None:
             while True:
@@ -177,10 +180,10 @@ class geocoder:
                     else:
                         latitude = latitude
                         longitude = longitude
-                    return pd.DataFrame({'address' : address, 'latitude' : [latitude], 'longitude' : [longitude]})
+                    return pd.DataFrame({'address' : address, 'latitude' : [latitude], 'longitude' : [longitude], 'geom' : [None], 'address_prepared' : [address_prepared]})
                     break
                 except WebDriverException as error:
                     driver.close()
                     continue
         else:
-            return pd.DataFrame({'address' : address, 'latitude' : [latitude], 'longitude' : [longitude]})
+            return pd.DataFrame({'address' : address, 'latitude' : [latitude], 'longitude' : [longitude], 'geom' : [None], 'address_prepared' : [address_prepared]})
