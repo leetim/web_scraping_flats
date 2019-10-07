@@ -19,7 +19,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait as wait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException, NoSuchElementException, WebDriverException, InvalidSessionIdException
+from selenium.common.exceptions import TimeoutException, NoSuchElementException, InvalidSessionIdException
 
 # Для работы с табличными данными
 import pandas as pd
@@ -189,7 +189,7 @@ class geocoder:
                         longitude = longitude
                     return pd.DataFrame({'address' : address, 'latitude' : [latitude], 'longitude' : [longitude], 'geom' : [None], 'address_prepared' : [address_prepared]})
                     break
-                except (TimeoutException, WebDriverException, InvalidSessionIdException) as error:
+                except (TimeoutException, InvalidSessionIdException) as error:
                     driver.close()
                 except NoSuchElementException:
                     driver.close()
