@@ -261,7 +261,7 @@ class farpost_loader:
         """
         raw_address = re.findall('Адрес[\t\n\r]+.+', text_block)
         if len(raw_address) > 0:
-            address = 'Россия, Приморский край, Владивосток, ' + self.clean_ad(raw_address[0])
+            address = 'Россия Приморский край Владивосток ' + self.clean_ad(raw_address[0]).replace(',', '')
         else:
             address = None
         return address
@@ -375,13 +375,18 @@ class farpost_loader:
         одходит\sпод\sипотеку\s.+.contacts__actions\s{\smargin-right:\s50%;\smargin-bottom:\s10px;\s}
         |Дом [не]*\s*сдан\s.+.contacts__actions\s{\smargin-right:\s50%;\smargin-bottom:\s10px;\s}
         |Состояние\sи\sособенности\sквартиры\s.+.contacts__actions\s{\smargin-right:\s50%;\smargin-bottom:\s10px;\s} 
+        |Состояние\sи\sособенности\sквартиры\s.+\s.company-logo
+        |Состояние\sи\sособенности\sквартиры\s.+\$\(function
         """, re.VERBOSE)
         text = tamplate_search.findall(text)
         tamplate_delete = re.compile(r"""
         Не\sподходит\sпод\sипотеку\s|Подходит\sпод\sипотеку\s
         |\s.contacts__actions\s{\smargin-right:\s50%;\smargin-bottom:\s10px;\s}
         |\$\(function.+|Дом\s*[не]*сдан\s
-        |Состояние\sи\sособенности\sквартиры\s""", re.VERBOSE)
+        |Состояние\sи\sособенности\sквартиры\s
+        |\s.company-logo
+        |\$\(function
+        """, re.VERBOSE)
         if len(text) > 0:
             text = tamplate_delete.sub('', text[0]).strip()
         else:
