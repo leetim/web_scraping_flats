@@ -189,11 +189,11 @@ class geocoder:
                         longitude = longitude
                     return pd.DataFrame({'address' : address, 'latitude' : [latitude], 'longitude' : [longitude], 'geom' : [None], 'address_prepared' : [address_prepared]})
                     break
+                except (TimeoutException, WebDriverException, InvalidSessionIdException) as error:
+                    driver.close()
                 except NoSuchElementException:
                     driver.close()
                     return pd.DataFrame({'address': address, 'latitude': [None], 'longitude': [None], 'geom': [None], 'address_prepared': [address_prepared]})
-                except (TimeoutException, WebDriverException, InvalidSessionIdException) as error:
-                    driver.close()
                     continue
         else:
             return pd.DataFrame({'address' : address, 'latitude' : [latitude], 'longitude' : [longitude], 'geom' : [None], 'address_prepared' : [address_prepared]})
