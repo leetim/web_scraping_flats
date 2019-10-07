@@ -131,8 +131,13 @@ class geocoder:
                     timeout = timeout
                 )
                 geojson = result.json()
-                latitude = float(geojson[0]['lat']) if len(geojson) > 0 else None
-                longitude = float(geojson[0]['lon']) if len(geojson) > 0 else None
+                if len(geojson) > 0:
+                    latitude = float(geojson[0]['lat']) if geojson[0]['class'] == 'building' else None
+                    longitude = float(geojson[0]['lon']) if geojson[0]['class'] == 'building' else None
+
+                else:
+                    latitude = None
+                    longitude = None
                 break
             except (ConnectTimeout, ConnectionError, ReadTimeout) as e:
                 continue
