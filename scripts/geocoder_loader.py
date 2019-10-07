@@ -19,7 +19,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait as wait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import WebDriverException
+from selenium.common.exceptions import TimeoutException, NoSuchElementException, WebDriverException, InvalidSessionIdException
 
 # Для работы с табличными данными
 import pandas as pd
@@ -94,7 +94,7 @@ class geocoder:
                 # Установим time out
                 driver.implicitly_wait(10)
                 driver.get(url)
-                wait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, '.small-search-form-view__pin')))
+                wait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, '._view_full')))
                 driver.find_element(By.CSS_SELECTOR, '.card-title-view')
                 page_source = driver.page_source
                 bsObj = BeautifulSoup(page_source, 'html5lib')
@@ -169,7 +169,9 @@ class geocoder:
                     # Установим time out
                     driver.implicitly_wait(10)
                     driver.get(url)
-                    wait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, '.small-search-form-view__pin')))
+                    # Ждем загрузки левой панели
+                    wait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, '._view_full')))
+                    # Ищем плашку с координатами
                     driver.find_element(By.CSS_SELECTOR, '.card-title-view')
                     page_source = driver.page_source
                     driver.close()
@@ -187,7 +189,10 @@ class geocoder:
                         longitude = longitude
                     return pd.DataFrame({'address' : address, 'latitude' : [latitude], 'longitude' : [longitude], 'geom' : [None], 'address_prepared' : [address_prepared]})
                     break
-                except WebDriverException as error:
+                except NoSuchElementException:
+                    driver.close()
+                    return pd.DataFrame({'address': address, 'latitude': [None], 'longitude': [None], 'geom': [None], 'address_prepared': [address_prepared]})
+                except (TimeoutException, WebDriverException, InvalidSessionIdException) as error:
                     driver.close()
                     continue
         else:
