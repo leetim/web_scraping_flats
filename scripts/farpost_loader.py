@@ -463,7 +463,7 @@ class farpost_loader:
                     price = self.price_ad(bsObj_object)
                     text_block = bsObj_object.find_all('div', {'id': 'fieldsetView'})
                     if len(text_block) > 0:
-                        text_block = text_block[0].text
+                        text_block = str(text_block[0].text)
                         address = self.address_ad(text_block)
                         status_house = self.status_house_ad(text_block)
                         area = self.area_ad(text_block)
