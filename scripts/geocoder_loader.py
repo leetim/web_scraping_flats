@@ -94,7 +94,7 @@ class geocoder:
                 # Установим time out
                 driver.implicitly_wait(10)
                 driver.get(url)
-                wait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, '.card-title-view')))
+                wait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, '.small-search-form-view__pin')))
                 driver.find_element(By.CSS_SELECTOR, '.card-title-view')
                 page_source = driver.page_source
                 bsObj = BeautifulSoup(page_source, 'html5lib')
@@ -169,7 +169,7 @@ class geocoder:
                     # Установим time out
                     driver.implicitly_wait(10)
                     driver.get(url)
-                    wait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, '.card-title-view')))
+                    wait(driver, 10).until(EC.element_to_be_clickable((By.CSS_SELECTOR, '.small-search-form-view__pin')))
                     driver.find_element(By.CSS_SELECTOR, '.card-title-view')
                     page_source = driver.page_source
                     driver.close()
