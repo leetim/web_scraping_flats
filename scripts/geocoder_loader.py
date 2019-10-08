@@ -19,7 +19,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait as wait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException, NoSuchElementException, InvalidSessionIdException
+from selenium.common.exceptions import TimeoutException, NoSuchElementException, InvalidSessionIdException, WebDriverException
 
 # Для работы с табличными данными
 import pandas as pd
@@ -90,7 +90,10 @@ class geocoder:
                 chrome_options.add_argument("user-agent={user_agent}".format(user_agent=ua.Chrome))
                 #  Запускаем без графического драйвера
                 chrome_options.add_argument('--headless')
-                driver = webdriver.Chrome(options=chrome_options)
+                # Исправляем ошибку DevToolsActivePort
+                chrome_options.add_argument("--no-sandbox")
+                chrome_options.add_argument("--disable-dev-shm-usage")
+                driver = webdriver.Chrome(options = chrome_options)
                 # Установим time out
                 driver.implicitly_wait(10)
                 driver.get(url)
@@ -165,6 +168,9 @@ class geocoder:
                     chrome_options.add_argument("user-agent={user_agent}".format(user_agent = headers))
                     #  Запускаем без графического драйвера
                     chrome_options.add_argument('headless')
+                    # Исправляем ошибку DevToolsActivePort
+                    chrome_options.add_argument("--no-sandbox")
+                    chrome_options.add_argument("--disable-dev-shm-usage")
                     driver = webdriver.Chrome(options = chrome_options)
                     # Установим time out
                     driver.implicitly_wait(10)
