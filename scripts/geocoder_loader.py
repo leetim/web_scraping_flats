@@ -111,8 +111,8 @@ class geocoder:
                 driver.close()
                 break
             except WebDriverException as error:
-                driver.close()
                 continue
+                driver.close()
 
     def osm_coordinates(self, address, timeout = 10) -> list():
         """
@@ -168,9 +168,6 @@ class geocoder:
                     chrome_options.add_argument("user-agent={user_agent}".format(user_agent = headers))
                     #  Запускаем без графического драйвера
                     chrome_options.add_argument('headless')
-                    # Исправляем ошибку DevToolsActivePort
-                    chrome_options.add_argument("--no-sandbox")
-                    chrome_options.add_argument("--disable-dev-shm-usage")
                     driver = webdriver.Chrome(options = chrome_options)
                     # Установим time out
                     driver.implicitly_wait(10)
@@ -180,7 +177,6 @@ class geocoder:
                     # Ищем плашку с координатами
                     driver.find_element(By.CSS_SELECTOR, '.card-title-view')
                     page_source = driver.page_source
-                    driver.close()
                     bsObj = BeautifulSoup(page_source, 'html5lib')
                     coordinats_list = bsObj.find_all('div', {'class' : 'clipboard__action-wrapper _inline'})
                     # Ищем координтаы
@@ -195,11 +191,11 @@ class geocoder:
                         longitude = longitude
                     return pd.DataFrame({'address' : address, 'latitude' : [latitude], 'longitude' : [longitude], 'geom' : [None], 'address_prepared' : [address_prepared]})
                     break
-                except (TimeoutException, InvalidSessionIdException) as error:
-                    driver.close()
                 except NoSuchElementException:
-                    driver.close()
                     return pd.DataFrame({'address': address, 'latitude': [None], 'longitude': [None], 'geom': [None], 'address_prepared': [address_prepared]})
+                except TimeoutException:
                     continue
+                finally:
+                    driver.close()
         else:
             return pd.DataFrame({'address' : address, 'latitude' : [latitude], 'longitude' : [longitude], 'geom' : [None], 'address_prepared' : [address_prepared]})
