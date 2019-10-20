@@ -203,7 +203,7 @@ class farpost_loader:
         )
 
         # Обработаем данные
-        result_df['url'] = result_df.apply(lambda x: 'https://www.farpost.ru' + x['raw_url'], axis=1)
+        result_df['url'] = result_df.apply(lambda x: x['raw_url'], axis=1)
         result_df['page'] = url
         return result_df
 
