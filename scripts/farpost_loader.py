@@ -178,7 +178,7 @@ class farpost_loader:
         bsObj_offers = BeautifulSoup(url_links.text, 'html5lib')
 
         # Определим маску поиска ссылки
-        regex = re.compile('/vladivostok/realty/sell_flats/.+\d{5,10}.html')
+        regex = re.compile('https://www.farpost.ru/vladivostok/realty/sell_flats/.+\d{5,10}.html')
         links = bsObj_offers.find_all("a")
 
         # Создадим объект для сбора результата
