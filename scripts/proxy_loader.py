@@ -108,7 +108,7 @@ class proxy_loader:
         df = self.get_proxy_servers()
 
         # Проверяем proxy
-        pool = ThreadPool(10)
+        pool = ThreadPool(100)
         results_proxy_list = pool.map(self.get_check_proxy, df.name)
         df['is_work'] = results_proxy_list
 
