@@ -8,6 +8,6 @@
 ```create extension postgis;```<br>
 
 ## Схема данных: <br>
-![img](https://github.com/VolokzhaninVadim/web_scraping_flats/blob/master/ddl/data_scheme.png)
+![img](https://github.com/VolokzhaninVadim/web_scraping_flats/blob/master/ddl_dml/data_scheme.png)
 
 
