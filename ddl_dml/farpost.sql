@@ -1,9 +1,9 @@
 
 -- Drop table
 
--- DROP TABLE staging_tables.farpost;
+-- DROP TABLE farpost.farpost;
 
-CREATE TABLE staging_tables.farpost (
+CREATE TABLE farpost.farpost (
 	id int4 NULL,
 	title text NULL,
 	"text" text NULL,
@@ -19,6 +19,8 @@ CREATE TABLE staging_tables.farpost (
 	floor text NULL,
 	url text NULL,
 	is_balcony bool NULL,
-	"source" text NULL,
+	img_main text NULL,
+	longitude float8 NULL,
+	latitude float8 NULL,
 	load_date timestamp NULL
 );
