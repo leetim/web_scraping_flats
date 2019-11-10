@@ -1,6 +1,6 @@
 ![img](https://github.com/VolokzhaninVadim/web_scraping_flats/blob/master/project_icon.png)
 # Анализ рынка недвижимости (г. Владивосток. )
-## Установка необходимых компонентов:
+## Установка необходимых компонентов (postgre):
 **Установим необходимые пакеты:**<br>
 <code>sudo apt install postgis</code><br>
 **Установим расширение в pg:**<br>
