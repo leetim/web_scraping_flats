@@ -1,3 +1,4 @@
+![img](https://github.com/VolokzhaninVadim/web_scraping_flats/blob/master/project_icon.png)
 # Анализ рынка недвижимости (г. Владивосток. )
 ## Установка необходимых компонентов:
 **Установим необходимые пакеты:**<br>
