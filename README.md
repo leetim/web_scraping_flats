@@ -9,5 +9,8 @@
 
 ## Схема данных: <br>
 ![img](https://github.com/VolokzhaninVadim/web_scraping_flats/blob/master/ddl_dml/data_scheme.png)
+## Код для crontab -e
+<code># Запуск обработчика объявлений farpost<code>
+0 23 * * * /mnt/sda1/Documents/Projects/web_scraping_flats/scripts/farpost_scheduler.sh > /mnt/sda1/Documents/Projects/web_scraping_flats/scripts/farpost_log.txt 2>&1
 
 
