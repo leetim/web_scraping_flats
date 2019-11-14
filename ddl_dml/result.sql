@@ -52,7 +52,7 @@ with
 							farpost.farpost as farpost
 		),
 		distance as (
-		-- Связываем дома и объявление, расстояние должно быть не мменее 37 метров и на 1 объявление должна приходится 1 строка
+		-- Связываем дома и объявление, расстояние должно быть не мменее 37 метров 
 						select 
 								farpost.id as farpost_id 
 								,farpost.geom as farpost_geom
@@ -131,6 +131,7 @@ with
 					from 
 							distance
 					where 
+					-- На 1 объявление должна приходится 1 строка
 							distance.farpost_id  not in (
 														select 
 																farpost_id
